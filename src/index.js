@@ -19,14 +19,24 @@ class App extends React.Component {
     );
   }
 
-  render() {
+  // Helper function to wrap all rendered html. We do this so we can wrap all our return statements based on condition under a parent div.
+  renderContent() {
     if (this.state.errorMessage && !this.state.lat) {
       return <div>Error: {this.state.errorMessage} </div>;
     }
     if (!this.state.errorMessage && this.state.lat) {
       return <SeasonDisplay lat={this.state.lat} />;
     }
-    return <Spinner />;
+    return (
+      <Spinner
+        activity="Waiting . . ."
+        message="Please accept location request to find your hemispheric location."
+      />
+    );
+  }
+
+  render() {
+    return <div className="wrapper">{this.renderContent()}</div>;
   }
 }
 
